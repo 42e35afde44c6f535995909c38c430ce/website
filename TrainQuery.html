@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainieren</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="trainQuery_style.css">
+</head>
+<body>
+    <div id="sideNav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="index.html">Home</a>
+        <a href="#" onclick="enableTrain()">Trainieren</a>
+        <a href="#" onclick="enableQuery()">Abfragen</a>
+        <a href="test.html">test</a>
+        <a href="About.html">About</a>
+    </div>
+    <div id="wrapperT">
+        <div class="control">
+            <div id="openNav" onclick="openNav()">&#9776;</div>
+            <!--<button onclick="setCookies()">set</button>-->
+            <fieldset>
+                <legend>Choose parameters:</legend>
+            <label for="lr">Learning rate:</label>
+            <input class="input" id="lr" type="number" step="0.01" value="0.1">
+            <br>
+            <label for="hnodes">Hidden nodes:</label>
+            <input class="input" id="hnodes" type="number" step="1" value = "150">
+            <br>
+            <label for="epochs">Epochs:</label>
+            <input class="input" id="epochs" type="number" step="1" value="1">
+            <br>
+            </fieldset>
+            <!--<label for="file">Selector:</label>
+            <input class="input" id="file" type="number" step="1" value="0">
+            <br>-->
+            <button id="confirm" onclick="take()">Confirm</button>
+            <br>
+            <p id="result"></p>
+            <input type="file" id="fileInput" accept=".csv" />
+            <button class="btn" onclick="runNeuralNetwork()">Train</button>
+            
+        </div>
+        <div class="content">
+            <label for="epochRunning">Running epoch nr: </label>
+            <div id="epochRunning"></div>
+            <label for="success">Erfolg: </label>
+            <output id="success">test</output>
+        </div>
+    </div>
+                    <!--  Abfragen  -->
+    <div id="wrapperQ">
+        <div class="control">
+            <div id="openNav" onclick="openNav()">&#9776;</div>
+            <input type="file" id="fileInput2" accept=".csv" />
+            <button class="btn" onclick="read()">Query</button>
+            <fieldset>
+                <legend>Choose trainingstatus: </legend>
+                <div class="status">
+                    <input type="radio" id="self" name="status" value="self">
+                    <label for="self">Self trained network</label>
+                </div>
+                <div class="status">
+                    <input type="radio" id="pre" name="status" value="pre">
+                    <label for="pre">Full pretrained network</label>
+                </div>
+            </fieldset>
+            <!--  Stiftgröße - S/W  -->
+            <input type="color" id="color">
+            <button id="reset" onclick="reset()">Reset</button>
+            <div class="container">
+                <!--  28x28 Input Field  -->
+            </div>
+        </div>
+        <div class="content">
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="network.js"></script>
+</body>
+</html>
