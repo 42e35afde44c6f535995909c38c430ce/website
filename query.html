@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="query.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="train.html">Train</a></li>
+        <li><a class="current" href="#">Query</a></li>
+        <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="mainContainer">
+        <div id="upper-section">
+            <div class="half">
+                <div id="color-reset-container">
+                    <input type="color" id="C-input">
+                    <button class="textManrope btn" onclick="reset()">Reset</button>
+                </div>
+            </div>
+            <div class="half">
+                <div id="pre-select-container">
+                    <div class="status">
+                        <input type="radio" id="self" name="status" value="self">
+                        <label for="self">Self trained network</label>
+                    </div>
+                    <div class="status">
+                        <input type="radio" id="pre" name="status" value="pre">
+                        <label for="pre">Full pretrained network</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="lower-section">
+            <div class="half">
+                <div id="field-container">
+                    <div class="container"></div>
+                </div>
+            </div>
+            <div class="half">
+                <div id="query-container">
+                    <button class="textManrope btn" onclick="queryNetwork()">Query</button>
+                </div>
+                <div id="output-container">
+                    <div class="textManrope" id="query-output"></div>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+        <script src="query.js"></script>
+    </div>
+</body>
+</html>

@@ -1,59 +1,63 @@
+:root {
+	--mainColor: darkslategrey;
+	--secondaryColor: aliceblue;
+}
+
 body{
-    background-color: white;
-}
-
-#openNav {
-    background-color: darkslategrey;
-    color: #818181;
-    border-radius: 10px;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    vertical-align: middle;
-    text-align: center;
-    font-size: 22px;
-    transition: 0.2s;
-}
-
-#openNav:hover {
-    color:aliceblue;
-}
-
-.sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: darkslategrey;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-  }
-  
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.2s;
-}
-  
-.sidenav a:hover {
-    color: aliceblue;
-}
-  
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+    max-width: 100vw;
+    max-height: 100vh;
 }
 
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+}
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    width: 100vw;
+    top:0;
+    z-index: 1;
+    font-size: 18px;
+}
+
+li {
+    float:left;
+}
+
+li a {
+    font-family: 'Manrope', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    
+    display: block;
+    color: var(--secondaryColor);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+    transition: 0.5s;
+}
+
+.current {
+    background-color: var(--mainColor);
+}
+
+
+.textManrope {
+    font-family: 'Manrope', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+}
+
+*, html {
+    margin:0;
+    padding:0;  
 }

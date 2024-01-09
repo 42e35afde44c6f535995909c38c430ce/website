@@ -1,21 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home_style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> <!--  exercise  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope&family=Montserrat:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="sideNav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#">Home</a>
-        <a href="TrainQuery.html">Trainieren</a>
-        <a href="TrainQuery.html">Abfragen</a>
-        <a href="About.html">About</a>
+    <ul>
+        <li><a class="current" href="#">Home</a></li>
+        <li><a href="Train.html">Train</a></li>
+        <li><a href="query.html">Query</a></li>
+        <li><a href="About.html">About</a></li>
+    </ul>
+    <div class="mainContainer">
+        <div class="container header">
+            <h1 class="textManrope">Welcome to this site!</h1>
+            <h2 class="textManrope">On this website you can try out some things with a simple neural network!</h2>
+        </div>
+        <div class="container content">
+            <div class="test">
+                <span class="material-symbols-outlined" style="font-size: 48px;">settings</span>
+                <div class="underText">Vary the parameters as you wish</div>
+            </div>
+            <div class="test">
+                <span class="material-symbols-outlined" style="font-size: 48px;">polyline</span>
+                <div class="underText">Draw your own</div>
+            </div>
+            <div class="test">
+                <span class="material-symbols-outlined" style="font-size: 48px;">draw</span>
+                <div class="underText">Draw numbers by yourself and let the programm guess</div>
+            </div>
+            <div class="test">
+                <span class="material-symbols-outlined" style="font-size: 48px;">exercise</span>
+                <div class="underText">Train the neural network by yourself</div>
+            </div>
+            <div class="test">
+                <span class="material-symbols-outlined" style="font-size: 48px;">military_tech</span>
+                <div class="underText">Reach more than 90% success rate</div>
+            </div>
+        </div>
+        <div class="container content-pictures">
+            <div class="textManrope contentHead">The following pictures are all fully created by AI!</div>
+            <div class="container image-container">
+                <img src="Assets/Campfire.png">
+                <div class="textManrope img-des">"Small lake with three trees, a camp fire in front and a dock. Drawn by pencil."</div>
+            </div>
+            <div class="container image-container">
+                <img src="Assets/godSombredo.png">
+                <div class="textManrope img-des">"Impressionist oil painting of Godzilla with a sombrero."</div>
+            </div>
+            <div class="container image-container">
+                <img src="Assets/DALLEPanda.png">
+                <div class="textManrope img-des">"Panda mad scientist mixing sparkling chemicals, digital art."</div>
+            </div>
+            <div class="container image-container">
+                <img src="Assets/DALLEdictatorship.png">
+                <div class="textManrope img-des">"Abstract oilpainting about a pessimistic future of a dictatorship and a propaganda state."</div>
+            </div>
+        </div>
     </div>
-    <div id="openNav" onclick="openNav()">&#9776;</div>
 
     <script src="script.js"></script>
 </body>
