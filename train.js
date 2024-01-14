@@ -15,7 +15,7 @@ line.style.width = 0;
 
 function setCookies() {
     localStorage.clear();
-    localStorage.setItem("hNodes", ""+document.getElementById("hnodes").value);
+    localStorage.setItem("hNodes", "" + document.getElementById("hnodes").value);
     localStorage.setItem("wih", JSON.stringify(network.wih));
     localStorage.setItem("who", JSON.stringify(network.who));
 }
@@ -25,19 +25,19 @@ function take() {
     hidden_nodes = document.getElementById("hnodes").value;
     epochs = document.getElementById("epochs").value;
     //selector = document.getElementById("file").value;
-    console.log("lr: "+learning_rate+" hnodes: "+hidden_nodes+" epochs: "+epochs);
+    console.log("lr: " + learning_rate + " hnodes: " + hidden_nodes + " epochs: " + epochs);
 }
 
 function check(input) {
-    if(input.value <= 0){
+    if (input.value <= 0) {
         input.value = input.step;
     }
 }
 
 
- // Network
+// Network
 
- function get_max_index(input) {
+function get_max_index(input) {
     var i = 0;
     for (var n = 0; n < input.length; n++) {
         {
@@ -92,16 +92,20 @@ var NeuralNetwork = /** @class */ (function () {
         this.who = this.createMatrix(this.output_nodes, this.hidden_nodes);
     }
     /*private*/ NeuralNetwork.prototype.createMatrix = function (rows, cols) {
-        var result = (function (dims) { var allocate = function (dims) { if (dims.length === 0) {
-            return 0;
-        }
-        else {
-            var array = [];
-            for (var i = 0; i < dims[0]; i++) {
-                array.push(allocate(dims.slice(1)));
-            }
-            return array;
-        } }; return allocate(dims); })([rows, cols]);
+        var result = (function (dims) {
+            var allocate = function (dims) {
+                if (dims.length === 0) {
+                    return 0;
+                }
+                else {
+                    var array = [];
+                    for (var i = 0; i < dims[0]; i++) {
+                        array.push(allocate(dims.slice(1)));
+                    }
+                    return array;
+                }
+            }; return allocate(dims);
+        })([rows, cols]);
         for (var i = 0; i < result.length; i++) {
             {
                 for (var j = 0; j < result[0].length; j++) {
@@ -116,16 +120,20 @@ var NeuralNetwork = /** @class */ (function () {
         return result;
     };
     NeuralNetwork.prototype.train = function (input) {
-        var target = (function (dims) { var allocate = function (dims) { if (dims.length === 0) {
-            return 0;
-        }
-        else {
-            var array = [];
-            for (var i = 0; i < dims[0]; i++) {
-                array.push(allocate(dims.slice(1)));
-            }
-            return array;
-        } }; return allocate(dims); })([this.output_nodes, 1]);
+        var target = (function (dims) {
+            var allocate = function (dims) {
+                if (dims.length === 0) {
+                    return 0;
+                }
+                else {
+                    var array = [];
+                    for (var i = 0; i < dims[0]; i++) {
+                        array.push(allocate(dims.slice(1)));
+                    }
+                    return array;
+                }
+            }; return allocate(dims);
+        })([this.output_nodes, 1]);
         for (var index19037 = 0; index19037 < target.length; index19037++) {
             var d = target[index19037];
             {
@@ -133,16 +141,20 @@ var NeuralNetwork = /** @class */ (function () {
             }
         }
         target[input[0]][0] = 0.99;
-        var inputs = (function (dims) { var allocate = function (dims) { if (dims.length === 0) {
-            return 0;
-        }
-        else {
-            var array = [];
-            for (var i = 0; i < dims[0]; i++) {
-                array.push(allocate(dims.slice(1)));
-            }
-            return array;
-        } }; return allocate(dims); })([input.length - 1, 1]);
+        var inputs = (function (dims) {
+            var allocate = function (dims) {
+                if (dims.length === 0) {
+                    return 0;
+                }
+                else {
+                    var array = [];
+                    for (var i = 0; i < dims[0]; i++) {
+                        array.push(allocate(dims.slice(1)));
+                    }
+                    return array;
+                }
+            }; return allocate(dims);
+        })([input.length - 1, 1]);
         for (var i = 1; i < input.length; i++) {
             {
                 inputs[i - 1][0] = 0.9 * input[i] / 255.0 + 0.01;
@@ -150,16 +162,20 @@ var NeuralNetwork = /** @class */ (function () {
             ;
         }
         this.calculate(inputs);
-        var output_errors = (function (dims) { var allocate = function (dims) { if (dims.length === 0) {
-            return 0;
-        }
-        else {
-            var array = [];
-            for (var i = 0; i < dims[0]; i++) {
-                array.push(allocate(dims.slice(1)));
-            }
-            return array;
-        } }; return allocate(dims); })([target.length, 1]);
+        var output_errors = (function (dims) {
+            var allocate = function (dims) {
+                if (dims.length === 0) {
+                    return 0;
+                }
+                else {
+                    var array = [];
+                    for (var i = 0; i < dims[0]; i++) {
+                        array.push(allocate(dims.slice(1)));
+                    }
+                    return array;
+                }
+            }; return allocate(dims);
+        })([target.length, 1]);
         for (var i = 0; i < output_errors.length; i++) {
             {
                 output_errors[i][0] = target[i][0] - this.final_outputs[i][0];
@@ -194,16 +210,20 @@ var NeuralNetwork = /** @class */ (function () {
         setCookies();
     };
     /*private*/ NeuralNetwork.prototype.calculateError = function (errors, outputs) {
-        var result = (function (dims) { var allocate = function (dims) { if (dims.length === 0) {
-            return 0;
-        }
-        else {
-            var array = [];
-            for (var i = 0; i < dims[0]; i++) {
-                array.push(allocate(dims.slice(1)));
-            }
-            return array;
-        } }; return allocate(dims); })([errors.length, 1]);
+        var result = (function (dims) {
+            var allocate = function (dims) {
+                if (dims.length === 0) {
+                    return 0;
+                }
+                else {
+                    var array = [];
+                    for (var i = 0; i < dims[0]; i++) {
+                        array.push(allocate(dims.slice(1)));
+                    }
+                    return array;
+                }
+            }; return allocate(dims);
+        })([errors.length, 1]);
         for (var i = 0; i < result.length; i++) {
             {
                 result[i][0] = errors[i][0] * outputs[i][0] * (1 - outputs[i][0]);
@@ -213,16 +233,20 @@ var NeuralNetwork = /** @class */ (function () {
         return result;
     };
     NeuralNetwork.prototype.query = function (input) {
-        var inputs = (function (dims) { var allocate = function (dims) { if (dims.length === 0) {
-            return 0;
-        }
-        else {
-            var array = [];
-            for (var i = 0; i < dims[0]; i++) {
-                array.push(allocate(dims.slice(1)));
-            }
-            return array;
-        } }; return allocate(dims); })([input.length - 1, 1]);
+        var inputs = (function (dims) {
+            var allocate = function (dims) {
+                if (dims.length === 0) {
+                    return 0;
+                }
+                else {
+                    var array = [];
+                    for (var i = 0; i < dims[0]; i++) {
+                        array.push(allocate(dims.slice(1)));
+                    }
+                    return array;
+                }
+            }; return allocate(dims);
+        })([input.length - 1, 1]);
         for (var i = 1; i < input.length; i++) {
             {
                 inputs[i - 1][0] = 0.9 * input[i] / 255.0 + 0.01;
@@ -230,8 +254,10 @@ var NeuralNetwork = /** @class */ (function () {
             ;
         }
         this.calculate(inputs);
-        var result = (function (s) { var a = []; while (s-- > 0)
-            a.push(0); return a; })(this.final_outputs.length);
+        var result = (function (s) {
+            var a = []; while (s-- > 0)
+                a.push(0); return a;
+        })(this.final_outputs.length);
         for (var i = 0; i < result.length; i++) {
             {
                 result[i] = this.final_outputs[i][0];
@@ -253,16 +279,20 @@ var NeuralNetwork = /** @class */ (function () {
         var colsB = matrixB[0].length;
         if (colsA !== rowsB)
             return null;
-        var result = (function (dims) { var allocate = function (dims) { if (dims.length === 0) {
-            return 0;
-        }
-        else {
-            var array = [];
-            for (var i = 0; i < dims[0]; i++) {
-                array.push(allocate(dims.slice(1)));
-            }
-            return array;
-        } }; return allocate(dims); })([rowsA, colsB]);
+        var result = (function (dims) {
+            var allocate = function (dims) {
+                if (dims.length === 0) {
+                    return 0;
+                }
+                else {
+                    var array = [];
+                    for (var i = 0; i < dims[0]; i++) {
+                        array.push(allocate(dims.slice(1)));
+                    }
+                    return array;
+                }
+            }; return allocate(dims);
+        })([rowsA, colsB]);
         for (var i = 0; i < rowsA; i++) {
             {
                 for (var j = 0; j < colsB; j++) {
@@ -296,16 +326,20 @@ var NeuralNetwork = /** @class */ (function () {
         return x;
     };
     /*private*/ NeuralNetwork.prototype.transpose = function (matrix) {
-        var result = (function (dims) { var allocate = function (dims) { if (dims.length === 0) {
-            return 0;
-        }
-        else {
-            var array = [];
-            for (var i = 0; i < dims[0]; i++) {
-                array.push(allocate(dims.slice(1)));
-            }
-            return array;
-        } }; return allocate(dims); })([matrix[0].length, matrix.length]);
+        var result = (function (dims) {
+            var allocate = function (dims) {
+                if (dims.length === 0) {
+                    return 0;
+                }
+                else {
+                    var array = [];
+                    for (var i = 0; i < dims[0]; i++) {
+                        array.push(allocate(dims.slice(1)));
+                    }
+                    return array;
+                }
+            }; return allocate(dims);
+        })([matrix[0].length, matrix.length]);
         for (var i = 0; i < matrix.length; i++) {
             {
                 for (var j = 0; j < matrix[0].length; j++) {
@@ -323,10 +357,10 @@ var NeuralNetwork = /** @class */ (function () {
 }());
 NeuralNetwork["__class"] = "NeuralNetwork";
 
-function runNeuralNetwork(){
+function runNeuralNetwork() {
     // const fileInput = document.getElementById('fileInput');
     // const file = fileInput.files[0];
-    
+
     // if (file) {
     //     const reader = new FileReader();
     //     reader.onload = function (event) {
@@ -336,90 +370,97 @@ function runNeuralNetwork(){
     // }
     const selection = document.querySelector('#file_selector');
     var length = 0;
-    if(window.matchMedia("(min-width: 480px)").matches){
+    if (window.matchMedia("(min-width: 480px)").matches) {
         length = 382;
-    } else{
+    } else {
         length = 272;
     }
-    if(selection.selectedIndex == 0){
+    if (selection.selectedIndex == 0) {
         csvFileName = 'data/mnist_100.csv';
-    } else if(selection.selectedIndex == 1){
+    } else if (selection.selectedIndex == 1) {
         csvFileName = 'data/mnist_test.csv';
-    } else if(selection.selectedIndex == 2){
+    } else if (selection.selectedIndex == 2) {
         csvFileName = 'data/mnist_train.csv';
     }
     fetch(csvFileName)
-      .then(response => response.text())
-      .then(content => {
-        const lines = content.split('\n');
-        const sets = lines.map(line => line.split(',').map(val => parseInt(val)));
-                console.log("sets: "+sets.length);
-                
-                var startTime = Date.now();
-                var endTime;
-                var totalTime;
-                //var sets = ([]);
-                endTime = /* currentTimeMillis */ Date.now();
-                totalTime = endTime - startTime;
-                console.info("\n\nData collected\t\ttook " + totalTime + " ms");
-                console.log("Learning Rate: "+learning_rate);
-                console.info("\nTraining...\t\t");
-                network = new NeuralNetwork(input_nodes, hidden_nodes, output_nodes, learning_rate);
-    
-                startTime = /* currentTimeMillis */ Date.now();
-    
-                var i = 0;
-    
-                const intervalID = setInterval(function() {
-                    // Langlaufender Code in kleinen Schritten ausführen
-                    console.log(i); // Zum Testen in der Konsole
-                    
-                    console.log("Epoch Nr: "+(i+1));
-                    let prog = ((i)/epochs)*length;
-                    let fin = Math.round(prog);
-                    line.style.width = `${fin}px`;
-                    console.log("FIN: "+fin);
-    
-                    {
-                        for (var j = 0; j < /* size */ sets.length-1; j++) {
-                            {
-                                network.train(/* get */ sets[j]);
-                            }
-                            ;
+        .then(response => response.text())
+        .then(content => {
+            const lines = content.split('\n');
+            const sets = lines.map(line => line.split(',').map(val => parseInt(val)));
+            console.log("sets: " + sets.length);
+
+            var startTime = Date.now();
+            var endTime;
+            var totalTime;
+            //var sets = ([]);
+            endTime = /* currentTimeMillis */ Date.now();
+            totalTime = endTime - startTime;
+            console.info("\n\nData collected\t\ttook " + totalTime + " ms");
+            console.log("Learning Rate: " + learning_rate);
+            console.info("\nTraining...\t\t");
+            network = new NeuralNetwork(input_nodes, hidden_nodes, output_nodes, learning_rate);
+
+            startTime = /* currentTimeMillis */ Date.now();
+
+            var i = 0;
+
+            const intervalID = setInterval(function () {
+                // Langlaufender Code in kleinen Schritten ausführen
+                console.log(i); // Zum Testen in der Konsole
+
+                console.log("Epoch Nr: " + (i + 1));
+                let prog = ((i) / epochs) * length;
+                let fin = Math.round(prog);
+                line.style.width = `${fin}px`;
+                console.log("FIN: " + fin);
+
+                {
+                    for (var j = 0; j < /* size */ sets.length - 1; j++) {
+                        {
+                            network.train(/* get */ sets[j]);
                         }
+                        ;
                     }
-                    ;
-    
-    
-    
-                    // Hier erfolgt die Aktualisierung der UI
-                    
-                    i++;
-                    if (i >= epochs) {
-                        clearInterval(intervalID); // Stoppe den Intervall, wenn fertig
-    
-                        setTimeout(function() {
-                            line.style.width = length+"px";
-                            endTime = /* currentTimeMillis */ Date.now();
-                            totalTime = endTime - startTime;
-                            console.info("took " + totalTime / 1000.0 + " s");
-                            console.info("Training finished");
-                            console.log(typeof(network));
-                            var score = 0;
-                            for (var i = 0; i < /* size */ sets.length-1; i++) {
-                                {
-                                    if (get_max_index(network.query(/* get */ sets[i])) === /* get */ sets[i][0])
-                                        score++;
+                }
+                ;
+
+
+
+                // Hier erfolgt die Aktualisierung der UI
+
+                i++;
+                if (i >= epochs) {
+                    clearInterval(intervalID); // Stoppe den Intervall, wenn fertig
+                    setTimeout(function () {
+                        line.style.width = length + "px";
+                        endTime = /* currentTimeMillis */ Date.now();
+                        totalTime = endTime - startTime;
+                        console.info("took " + totalTime / 1000.0 + " s");
+                        console.info("Training finished");
+                        console.log(typeof (network));
+                        var score = 0;
+
+                        csvFileName = 'data/mnist_test.csv';
+                        fetch(csvFileName)
+                            .then(response => response.text())
+                            .then(content => {
+                                const lines = content.split('\n');
+                                const sets = lines.map(line => line.split(',').map(val => parseInt(val)));
+
+                                for (var i = 0; i < /* size */ sets.length - 1; i++) {
+                                    {
+                                        if (get_max_index(network.query(/* get */ sets[i])) === /* get */ sets[i][0])
+                                            score++;
+                                    }
+                                    ;
                                 }
-                                ;
-                            }
-                            console.info(score + " / " + /* size */ sets.length + "\t\t" + score / /* size */ sets.length);
-                            output.innerHTML = score + " / " + /* size */ sets.length + "  --:--  " + 100*(score/sets.length) + "%";
-                            console.info("\n\n\t---   Process finished   ---");
-                
-                        }, 50);
-                    }
-                }, 20);
-      })
-      .catch(error => console.error('Fehler beim Laden der CSV-Datei:', error));
+                                console.info(score + " / " + /* size */ sets.length + "\t\t" + score / /* size */ sets.length);
+                                output.innerHTML = score + " / " + /* size */ sets.length + "  --:--  " + 100 * (score / sets.length) + "%";
+                                console.info("\n\n\t---   Process finished   ---");
+                            })
+                    }, 50);
+                }
+            }, 20);
+        })
+        .catch(error => console.error('Fehler beim Laden der CSV-Datei:', error));
 }

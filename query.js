@@ -17,7 +17,7 @@ color.addEventListener('input', function () {
     const gs_col = `rgb(${val}, ${val}, ${val})`;
     color_background.style.backgroundColor = gs_col;
     reset_btn.style.color = gs_col;
-    reset_btn.style.backgroundColor = `rgb(${255-val}, ${255-val}, ${255-val})`;
+    reset_btn.style.backgroundColor = `rgb(${255 - val}, ${255 - val}, ${255 - val})`;
 });
 
 let size = 28;
@@ -110,7 +110,7 @@ function read() {
     var divs = container.children;
     for (let i = 0; i < divs.length; i++) {
         var colorString = divs[i].style.backgroundColor;
-        var red = 255-parseInt(colorString.split(")")[0].split("(")[1].split(",")[1]);
+        var red = 255 - parseInt(colorString.split(")")[0].split("(")[1].split(",")[1]);
         set.push(red);
     }
     return set;
@@ -337,5 +337,47 @@ async function queryNetwork() {
 }
 
 async function button_query() {
+    const divs = container.children;
+    const facts = new Array(58).fill(0);
+
+    function getBackgroundColorValue(element) {
+        const colval = element.style.backgroundColor;
+        return parseInt(colval.split(")")[0].split("(")[1].split(",")[1]);
+    }
+
+    for (let i = 58; i < divs.length; i++) {
+        if (i > 57 && i < 28 * 26 && i % 28 !== 0 && (i - 26) % 28 !== 0 && (i - 27) % 28 !== 0 && (i - 29) % 28 !== 0) {
+            const colval = getBackgroundColorValue(divs[i]);
+            if (colval === 255) {
+                let fact = 0;
+                for (let j = -2; j <= 2; j++) {
+                    for (let k = -2; k <= 2; k++) {
+                        if (!(j === 0 && k === 0)) {
+                            const index = i + 28 * j + k;
+                            if (index >= 0 && index < divs.length) {
+                                const neighborColval = getBackgroundColorValue(divs[index]);
+                                fact += 0.05 * ((255 - neighborColval) / 255);
+                            }
+                        }
+                    }
+                }
+                facts[i] = 1 - fact;
+            } else {
+                facts[i] = 2;
+            }
+        }
+    }
+
+    for (let i = 57; i < facts.length; i++) {
+        if (facts[i] !== 2) {
+            divs[i].style.backgroundColor = `rgb(${255 * facts[i]}, ${255 * facts[i]}, ${255 * facts[i]})`;
+        } else {
+            console.log(i);
+        }
+    }
+
+    divs[57].style.backgroundColor = "rgb(255,255,255)";
+
+    console.log("done");
     await queryNetwork();
 }
