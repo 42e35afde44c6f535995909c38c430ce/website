@@ -28,6 +28,13 @@ function take() {
     console.log("lr: "+learning_rate+" hnodes: "+hidden_nodes+" epochs: "+epochs);
 }
 
+function check(input) {
+    if(input.value <= 0){
+        input.value = input.step;
+    }
+}
+
+
  // Network
 
  function get_max_index(input) {
@@ -44,102 +51,7 @@ function take() {
 
 
 /* Generated from Java with JSweet 3.0.0 - http://www.jsweet.org */
-var Main = /** @class */ (function () {
-    function Main() {
-    }
-    Main.main = function (sets, qot) {
-        if(!qot){
 
-        var startTime = Date.now();
-        var endTime;
-        var totalTime;
-        //var sets = ([]);
-        endTime = /* currentTimeMillis */ Date.now();
-        totalTime = endTime - startTime;
-        console.info("\n\nData collected\t\ttook " + totalTime + " ms");
-        console.log("Learning Rate: "+learning_rate);
-        console.info("\nTraining...\t\t");
-        network = new NeuralNetwork(input_nodes, hidden_nodes, output_nodes, learning_rate);
-
-        startTime = /* currentTimeMillis */ Date.now();
-
-        var i = 0;
-
-        const intervalID = setInterval(function() {
-            // Langlaufender Code in kleinen Schritten ausführen
-            console.log(i); // Zum Testen in der Konsole
-            
-            console.log("Epoch Nr: "+(i+1));
-            let prog = ((i)/epochs)*382;
-            let fin = Math.round(prog);
-            line.style.width = `${fin}px`;
-            console.log("FIN: "+fin);
-
-            {
-                for (var j = 0; j < /* size */ sets.length-1; j++) {
-                    {
-                        network.train(/* get */ sets[j]);
-                    }
-                    ;
-                }
-            }
-            ;
-
-
-
-            // Hier erfolgt die Aktualisierung der UI
-            
-            i++;
-            if (i >= epochs) {
-                clearInterval(intervalID); // Stoppe den Intervall, wenn fertig
-
-                setTimeout(function() {
-                    line.style.width = "382px";
-                    endTime = /* currentTimeMillis */ Date.now();
-                    totalTime = endTime - startTime;
-                    console.info("took " + totalTime / 1000.0 + " s");
-                    console.info("Training finished");
-                    console.log(typeof(network));
-                    var score = 0;
-                    for (var i = 0; i < /* size */ sets.length-1; i++) {
-                        {
-                            if (get_max_index(network.query(/* get */ sets[i])) === /* get */ sets[i][0])
-                                score++;
-                        }
-                        ;
-                    }
-                    console.info(score + " / " + /* size */ sets.length + "\t\t" + score / /* size */ sets.length);
-                    output.innerHTML = score + " / " + /* size */ sets.length + "  ->  " + 100*(score/sets.length) + "%";
-                    console.info("\n\n\t---   Process finished   ---");
-        
-                }, 50);
-            }
-        }, 50); // Hier wird alle 2 Sekunden ein Schritt ausgeführt
-
-
-        // for (var i = 0; i < epochs; i++) {
-        //     console.log("Epoch Nr: "+(i+1));
-        //     let prog = (i/epochs)*252;
-        //     let fin = Math.round(prog);
-        //     line.style.width = `${fin}px`;
-        //     console.log("FIN: "+fin);
-
-        //     changeHTML("showPara", "Test");
-        //     {
-        //         for (var j = 0; j < /* size */ sets.length-1; j++) {
-        //             {
-        //                 network.train(/* get */ sets[j]);
-        //             }
-        //             ;
-        //         }
-        //     }
-        //     ;
-        // }
-        }
-    };
-    return Main;
-}());
-Main["__class"] = "Main";
 var NeuralNetwork = /** @class */ (function () {
     function NeuralNetwork(piN, phN, poN, plR) {
         if (this.input_nodes === undefined) {
@@ -407,75 +319,107 @@ var NeuralNetwork = /** @class */ (function () {
         }
         return result;
     };
-    /*private*/ NeuralNetwork.prototype.gf1 = function (mue, sigma, y, sgn) {
-        var result = mue + sigma * Math.sqrt(-2.0 * Math.log(sigma * y * Math.sqrt(2.0 * Math.PI)));
-        if (sgn)
-            return result;
-        return -1 * result;
-    };
-    NeuralNetwork.count = 0;
     return NeuralNetwork;
 }());
 NeuralNetwork["__class"] = "NeuralNetwork";
+
 function runNeuralNetwork(){
-    /*fetch('100.csv')
-    .then(response => {
-        if (!response.ok) {
-        throw new Error('Network response was not ok');
-        }
-        return response.text();
-    })
-    .then(csvText => {
-        // Hier hast du den Inhalt der CSV-Datei
-        console.log(csvText);
-        // Du kannst den Text weiter verarbeiten, z. B. in Zeilen aufteilen
+    // const fileInput = document.getElementById('fileInput');
+    // const file = fileInput.files[0];
+    
+    // if (file) {
+    //     const reader = new FileReader();
+    //     reader.onload = function (event) {
+
+    //     };
+    //     reader.readAsText(file);
+    // }
+    const selection = document.querySelector('#file_selector');
+    var length = 0;
+    if(window.matchMedia("(min-width: 480px)").matches){
+        length = 382;
+    } else{
+        length = 272;
+    }
+    if(selection.selectedIndex == 0){
+        csvFileName = 'data/mnist_100.csv';
+    } else if(selection.selectedIndex == 1){
+        csvFileName = 'data/mnist_test.csv';
+    } else if(selection.selectedIndex == 2){
+        csvFileName = 'data/mnist_train.csv';
+    }
+    fetch(csvFileName)
+      .then(response => response.text())
+      .then(content => {
         const lines = content.split('\n');
         const sets = lines.map(line => line.split(',').map(val => parseInt(val)));
-        Main.main(sets);
-        // Verarbeite jede Zeile weiter
-        lines.forEach(line => {
-        const values = line.split(',');
-        console.log(values);
-        // Hier kannst du die Werte der Zeile verarbeiten
-        });
-    })
-    .catch(error => {
-        console.error('There has been a problem with your fetch operation:', error);
-    });*/
+                console.log("sets: "+sets.length);
+                
+                var startTime = Date.now();
+                var endTime;
+                var totalTime;
+                //var sets = ([]);
+                endTime = /* currentTimeMillis */ Date.now();
+                totalTime = endTime - startTime;
+                console.info("\n\nData collected\t\ttook " + totalTime + " ms");
+                console.log("Learning Rate: "+learning_rate);
+                console.info("\nTraining...\t\t");
+                network = new NeuralNetwork(input_nodes, hidden_nodes, output_nodes, learning_rate);
+    
+                startTime = /* currentTimeMillis */ Date.now();
+    
+                var i = 0;
+    
+                const intervalID = setInterval(function() {
+                    // Langlaufender Code in kleinen Schritten ausführen
+                    console.log(i); // Zum Testen in der Konsole
+                    
+                    console.log("Epoch Nr: "+(i+1));
+                    let prog = ((i)/epochs)*length;
+                    let fin = Math.round(prog);
+                    line.style.width = `${fin}px`;
+                    console.log("FIN: "+fin);
+    
+                    {
+                        for (var j = 0; j < /* size */ sets.length-1; j++) {
+                            {
+                                network.train(/* get */ sets[j]);
+                            }
+                            ;
+                        }
+                    }
+                    ;
     
     
     
-    const fileInput = document.getElementById('fileInput');
-    const file = fileInput.files[0];
-
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (event) {
-            const content = event.target.result;
-            const lines = content.split('\n');
-            const sets = lines.map(line => line.split(',').map(val => parseInt(val)));
-            console.log(sets.length);
-            Main.main(sets, 0);
-        };
-        reader.readAsText(file);
-    }
-}
-
-function test() {
-    const fileInput = document.getElementById('fileInput');
-    const file = fileInput.files[0];
-
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (event) {
-            const content = event.target.result;
-            const lines = content.split('\n');
-            const sets = lines.map(line => line.split(',').map(val => parseInt(val)));
-            console.log(sets.length);
-
-            network = new NeuralNetwork(input_nodes, hidden_nodes, output_nodes, learning_rate);
-            Main.main(sets, 1);
-        };
-        reader.readAsText(file);
-    }
+                    // Hier erfolgt die Aktualisierung der UI
+                    
+                    i++;
+                    if (i >= epochs) {
+                        clearInterval(intervalID); // Stoppe den Intervall, wenn fertig
+    
+                        setTimeout(function() {
+                            line.style.width = length+"px";
+                            endTime = /* currentTimeMillis */ Date.now();
+                            totalTime = endTime - startTime;
+                            console.info("took " + totalTime / 1000.0 + " s");
+                            console.info("Training finished");
+                            console.log(typeof(network));
+                            var score = 0;
+                            for (var i = 0; i < /* size */ sets.length-1; i++) {
+                                {
+                                    if (get_max_index(network.query(/* get */ sets[i])) === /* get */ sets[i][0])
+                                        score++;
+                                }
+                                ;
+                            }
+                            console.info(score + " / " + /* size */ sets.length + "\t\t" + score / /* size */ sets.length);
+                            output.innerHTML = score + " / " + /* size */ sets.length + "  --:--  " + 100*(score/sets.length) + "%";
+                            console.info("\n\n\t---   Process finished   ---");
+                
+                        }, 50);
+                    }
+                }, 20);
+      })
+      .catch(error => console.error('Fehler beim Laden der CSV-Datei:', error));
 }

@@ -1,80 +1,123 @@
 //  Draw
 
-const container = document.querySelector('.container');
+const container = document.querySelector('.field');
 const sizeEl = document.querySelector('.size');
 const color = document.getElementById('C-input');
 const resetBtn = document.getElementById('reset');
+
+const color_background = document.getElementById('color-reset-container');
+const reset_btn = document.getElementById("reset");
 
 var output = document.getElementById("query-output");
 var self = document.getElementById("self");
 var pre = document.getElementById("pre");
 
-// Getting the value of the size input
+color.addEventListener('input', function () {
+    const val = color.value;
+    const gs_col = `rgb(${val}, ${val}, ${val})`;
+    color_background.style.backgroundColor = gs_col;
+    reset_btn.style.color = gs_col;
+    reset_btn.style.backgroundColor = `rgb(${255-val}, ${255-val}, ${255-val})`;
+});
+
 let size = 28;
 let draw = false;
+if (window.matchMedia("(min-width: 480px)").matches) {
+    function create(size) {
+        console.log("Creating Grid...");
+        for (let i = 0; i < size * size; i++) {
+            const div = document.createElement('div');
+            div.classList.add('pixel');
 
-function create(size) {
-    console.log("Creating Grid...");
-  // Updating the --size CSS variable
-  container.style.setProperty('--size', size);
-  for (let i = 0; i < size * size; i++) {
-    const div = document.createElement('div');
-    div.classList.add('pixel');
+            div.addEventListener('mouseover', function () {
+                if (!draw) return
+                const val = color.value;
+                const gs_val = `rgb(${val}, ${val}, ${val})`;
+                div.style.backgroundColor = gs_val;
+            });
+            div.addEventListener('mousedown', function () {
+                const val = color.value;
+                var gs_val = `rgb(${val}, ${val}, ${val})`;
+                div.style.backgroundColor = gs_val;
+            });
+            div.style.backgroundColor = "rgb(255,255,255)";
 
-    div.addEventListener('mouseover', function(){
-        if(!draw) return
-        div.style.backgroundColor = color.value;
+            container.appendChild(div);
+        }
+    }
+    window.addEventListener('mouseup', function () {
+        draw = false;
     });
-    div.addEventListener('mousedown', function(){
-        // We don't need to check if draw is true here
-        // because if we click on a pixel that means we want to draw that pixel
-        div.style.backgroundColor = color.value;
-        console.log("mouse down");
+
+    window.addEventListener('mousedown', function () {
+        draw = true;
+    });
+} else {
+    function create(size) {
+        console.log("Creating Grid...");
+
+        container.addEventListener('touchmove', function (event) {
+            event.preventDefault();
+            if (!draw) return;
+
+            const touch = event.touches[0];
+            const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+
+
+            if (targetElement && targetElement.classList.contains('pixel')) {
+                const val = color.value;
+                var gs_val = `rgb(${val}, ${val}, ${val})`;
+                targetElement.style.backgroundColor = gs_val;
+            }
+        });
+
+        container.addEventListener('touchstart', function (event) {
+            event.preventDefault();
+            const touch = event.touches[0];
+            const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+
+            if (targetElement && targetElement.classList.contains('pixel')) {
+                const val = color.value;
+                var gs_val = `rgb(${val}, ${val}, ${val})`;
+                targetElement.style.backgroundColor = gs_val;
+            }
+        });
+
+        for (let i = 0; i < size * size; i++) {
+            const div = document.createElement('div');
+            div.classList.add('pixel');
+            div.style.backgroundColor = "rgb(255,255,255)";
+            container.appendChild(div);
+        }
+    }
+    window.addEventListener('touchend', function () {
+        draw = false;
     });
 
-    container.appendChild(div);
-  }
+    window.addEventListener('touchstart', function () {
+        draw = true;
+    });
 }
-
 create(size);
 
-window.addEventListener('mouseup', function(){
-    draw = false;
-});
-
-window.addEventListener('mousedown', function(){
-    draw = true;
-});
-
-function reset(){
+function reset() {
     container.innerHTML = '';
     create(size);
 }
 
-function read(){
-    var set =[0];
-    var test = container.children;
-    for(let i = 0; i < test.length; i++){
-        if(test[i].style.backgroundColor == ''){
-            set.push(0);
-        } else{
-            set.push(255);
-        }
+function read() {
+    var set = [0];
+    var divs = container.children;
+    for (let i = 0; i < divs.length; i++) {
+        var colorString = divs[i].style.backgroundColor;
+        var red = 255-parseInt(colorString.split(")")[0].split("(")[1].split(",")[1]);
+        set.push(red);
     }
     return set;
 }
 
 var NeuralNetwork = /** @class */ (function () {
-    function NeuralNetwork(piN, phN, poN) {
-        if (this.input_nodes === undefined) {
-            this.input_nodes = 0;
-        }
-        if (this.hidden_nodes === undefined) {
-            this.hidden_nodes = 0;
-        }
-        if (this.output_nodes === undefined) {
-            this.output_nodes = 0;
-        }
+    function NeuralNetwork() {
         if (this.wih === undefined) {
             this.wih = null;
         }
@@ -93,21 +136,22 @@ var NeuralNetwork = /** @class */ (function () {
         if (this.final_outputs === undefined) {
             this.final_outputs = null;
         }
-        this.input_nodes = piN;
-        this.hidden_nodes = phN;
-        this.output_nodes = poN;
     }
     /*private*/ NeuralNetwork.prototype.calculateError = function (errors, outputs) {
-        var result = (function (dims) { var allocate = function (dims) { if (dims.length === 0) {
-            return 0;
-        }
-        else {
-            var array = [];
-            for (var i = 0; i < dims[0]; i++) {
-                array.push(allocate(dims.slice(1)));
-            }
-            return array;
-        } }; return allocate(dims); })([errors.length, 1]);
+        var result = (function (dims) {
+            var allocate = function (dims) {
+                if (dims.length === 0) {
+                    return 0;
+                }
+                else {
+                    var array = [];
+                    for (var i = 0; i < dims[0]; i++) {
+                        array.push(allocate(dims.slice(1)));
+                    }
+                    return array;
+                }
+            }; return allocate(dims);
+        })([errors.length, 1]);
         for (var i = 0; i < result.length; i++) {
             {
                 result[i][0] = errors[i][0] * outputs[i][0] * (1 - outputs[i][0]);
@@ -117,16 +161,20 @@ var NeuralNetwork = /** @class */ (function () {
         return result;
     };
     NeuralNetwork.prototype.query = function (input) {
-        var inputs = (function (dims) { var allocate = function (dims) { if (dims.length === 0) {
-            return 0;
-        }
-        else {
-            var array = [];
-            for (var i = 0; i < dims[0]; i++) {
-                array.push(allocate(dims.slice(1)));
-            }
-            return array;
-        } }; return allocate(dims); })([input.length - 1, 1]);
+        var inputs = (function (dims) {
+            var allocate = function (dims) {
+                if (dims.length === 0) {
+                    return 0;
+                }
+                else {
+                    var array = [];
+                    for (var i = 0; i < dims[0]; i++) {
+                        array.push(allocate(dims.slice(1)));
+                    }
+                    return array;
+                }
+            }; return allocate(dims);
+        })([input.length - 1, 1]);
         for (var i = 1; i < input.length; i++) {
             {
                 inputs[i - 1][0] = 0.9 * input[i] / 255.0 + 0.01;
@@ -134,8 +182,10 @@ var NeuralNetwork = /** @class */ (function () {
             ;
         }
         this.calculate(inputs);
-        var result = (function (s) { var a = []; while (s-- > 0)
-            a.push(0); return a; })(this.final_outputs.length);
+        var result = (function (s) {
+            var a = []; while (s-- > 0)
+                a.push(0); return a;
+        })(this.final_outputs.length);
         for (var i = 0; i < result.length; i++) {
             {
                 result[i] = this.final_outputs[i][0];
@@ -157,16 +207,20 @@ var NeuralNetwork = /** @class */ (function () {
         var colsB = matrixB[0].length;
         if (colsA !== rowsB)
             return null;
-        var result = (function (dims) { var allocate = function (dims) { if (dims.length === 0) {
-            return 0;
-        }
-        else {
-            var array = [];
-            for (var i = 0; i < dims[0]; i++) {
-                array.push(allocate(dims.slice(1)));
-            }
-            return array;
-        } }; return allocate(dims); })([rowsA, colsB]);
+        var result = (function (dims) {
+            var allocate = function (dims) {
+                if (dims.length === 0) {
+                    return 0;
+                }
+                else {
+                    var array = [];
+                    for (var i = 0; i < dims[0]; i++) {
+                        array.push(allocate(dims.slice(1)));
+                    }
+                    return array;
+                }
+            }; return allocate(dims);
+        })([rowsA, colsB]);
         for (var i = 0; i < rowsA; i++) {
             {
                 for (var j = 0; j < colsB; j++) {
@@ -200,16 +254,20 @@ var NeuralNetwork = /** @class */ (function () {
         return x;
     };
     /*private*/ NeuralNetwork.prototype.transpose = function (matrix) {
-        var result = (function (dims) { var allocate = function (dims) { if (dims.length === 0) {
-            return 0;
-        }
-        else {
-            var array = [];
-            for (var i = 0; i < dims[0]; i++) {
-                array.push(allocate(dims.slice(1)));
-            }
-            return array;
-        } }; return allocate(dims); })([matrix[0].length, matrix.length]);
+        var result = (function (dims) {
+            var allocate = function (dims) {
+                if (dims.length === 0) {
+                    return 0;
+                }
+                else {
+                    var array = [];
+                    for (var i = 0; i < dims[0]; i++) {
+                        array.push(allocate(dims.slice(1)));
+                    }
+                    return array;
+                }
+            }; return allocate(dims);
+        })([matrix[0].length, matrix.length]);
         for (var i = 0; i < matrix.length; i++) {
             {
                 for (var j = 0; j < matrix[0].length; j++) {
@@ -223,13 +281,6 @@ var NeuralNetwork = /** @class */ (function () {
         }
         return result;
     };
-    /*private*/ NeuralNetwork.prototype.gf1 = function (mue, sigma, y, sgn) {
-        var result = mue + sigma * Math.sqrt(-2.0 * Math.log(sigma * y * Math.sqrt(2.0 * Math.PI)));
-        if (sgn)
-            return result;
-        return -1 * result;
-    };
-    NeuralNetwork.count = 0;
     return NeuralNetwork;
 }());
 NeuralNetwork["__class"] = "NeuralNetwork";
@@ -246,18 +297,45 @@ function get_max_index(input) {
     return i;
 };
 
-function queryNetwork() {
-    if(self.checked){
+async function queryNetwork() {
+    output.style.color = "red";
+    if (self.checked) {
         console.log("self selected");
-        var test = localStorage.getItem("hNodes");
-        var network = new NeuralNetwork(784, test, 10);
+        var network = new NeuralNetwork;
         network.wih = JSON.parse(localStorage.getItem("wih"));
         network.who = JSON.parse(localStorage.getItem("who"));
-        
         let result = get_max_index(network.query(read()));
-        console.log("res: "+result);
+        console.log("res: " + result);
         output.innerHTML = result;
-    } else if(pre.checked){
+    } else if (pre.checked) {
+
         console.log("pre selected");
+        let jsonFilePath = "data/data_gson_1000_4.json";
+
+        try {
+            let response = await fetch(jsonFilePath);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            let data = await response.json();
+
+            var network = new NeuralNetwork(784, 1000, 10);
+            network.wih = Array.from(data[0]);
+            network.who = Array.from(data[1]);
+            console.log(network.wih.length);
+            let result = get_max_index(network.query(read()));
+            console.log("res: " + result);
+            output.innerHTML = result;
+
+        } catch (error) {
+            console.error('Error loading JSON:', error);;
+        }
     }
+
+    output.style.color = "white";
+}
+
+async function button_query() {
+    await queryNetwork();
 }

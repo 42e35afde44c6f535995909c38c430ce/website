@@ -3,41 +3,179 @@
     flex-direction: column;
     padding:0;
     margin:0;
-    height: 100vh;
     width: 100vw;
     position: absolute;
     top:0;
     background: linear-gradient(132deg, rgb(30, 144, 255) 0.00%, rgb(138, 43, 226) 100.00%);
 }
 
-#parameters {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 5vh;
-    align-items: center;
-    flex-wrap: wrap;
+@media screen and (min-width: 480px) {
+    .mainContainer {
+        height: 100vh;
+    }
+
+    #parameters {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 5vh;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .parameter {
+        width: 20vw;
+        height: 10vh;
+        margin: 50px;
+        padding: 20px;
+        background-color: #333;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #data {
+        height: 20vh;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 50px;
+    }
+    
+    #status {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: space-around;
+        backdrop-filter: none;
+        align-items: center;
+        border: none;
+        border-radius: 10px;
+        margin: 60px 20px 20px 20px;
+        backdrop-filter: blur(7px);
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .neumorphic-progress {
+        width: 390px;
+        margin: auto;
+    }
+
+    .CT-btn {
+        transition: 0.3s;
+    }
+
+    select {
+        appearance: none;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .btn {
+        width: 400px;
+        padding:20px;
+        border: none;
+        background-color: #333;
+        font-size: 23px;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+    }
+
+    .CT-btn:hover {
+        background-color: white;
+        color: #333;
+        border-radius: 30px;
+        transform: translateX(3px) translateY(-3px);
+    }
+
+    .CT-btn:hover:active {
+        transition: 0.2s;
+        background-color: #333;
+        color: white;
+        transform: translateX(2px) translateY(-2px);
+    }
 }
 
-#data {
-    height: 20vh;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 50px;
-}
+@media screen and (max-width: 480px) {
+    #parameters {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        margin-top: 5vh;
+        height: 80vh;
+        align-items: center;
+    }
 
-#status {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: space-around;
-    backdrop-filter: none;
-    align-items: center;
-    border: none;
-    border-radius: 10px;
-    margin: 60px 20px 20px 20px;
-    backdrop-filter: blur(7px);
-    background-color: rgba(255,255,255,0.8);
+    .parameter {
+        width: 70vw;
+        height: 10vh;
+        margin: 20px;
+        padding: 20px;
+        background-color: #333;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #data {
+        height: 30vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 50px;
+    }
+
+    #status {
+        display: flex;
+        flex-direction: column;
+        height: 50vh;
+        justify-content: space-around;
+        backdrop-filter: none;
+        align-items: center;
+        border: none;
+        border-radius: 10px;
+        margin: 60px 20px 20px 20px;
+        backdrop-filter: blur(7px);
+        background-color: rgba(255,255,255,0.8);
+    }
+    
+    .neumorphic-progress {
+        width: 280px;
+        margin: auto;
+    }
+    
+    .CT-btn {
+        transition: 0.2s;
+        width: 250px;
+    }
+
+    .CT-btn:active {
+        background-color: white;
+        color: #333;
+        border-radius: 40px;
+        transform: translateX(2px) translateY(-2px);
+    }
+
+    select {
+        appearance: none;
+        width: 350px;
+        text-align: center;
+    }
+
+    .btn {
+        padding:20px;
+        border: none;
+        background-color: #333;
+        font-size: 23px;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+    }
 }
 
 #performance {
@@ -50,18 +188,6 @@
     border-radius: 10px;
 }
 
-.parameter {
-    width: 20vw;
-    height: 10vh;
-    margin: 50px;
-    padding: 20px;
-    background-color: #333;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
 
 #label {
     color: white;
@@ -87,37 +213,6 @@ input[type="file"] {
     transition: 0.3s;
     font-weight: bold;
     font-size: 15px;
-}
-
-.CT-btn {
-    width:400px;
-    padding:20px;
-    border: none;
-    background-color: #333;
-    color: white;
-    font-size: 23px;
-    border-radius: 5px;
-    font-weight: bold;
-    border-radius: 10px;
-    transition: 0.3s;
-}
-
-.hover:hover {
-    background-color: white;
-    color: #333;
-    border-radius: 30px;
-    transform: translateX(3px) translateY(-3px);
-}
-
-.hover:hover:active {
-    transition: 0.2s;
-    background-color: #333;
-    color: white;
-    transform: translateX(2px) translateY(-2px);
-}
-
-.swbtn {
-    width:400px;
 }
 
 #nmp-around {
@@ -147,10 +242,8 @@ input[type="number"]:hover {
     box-shadow:inset 0px 0px 0px 3px #333;
 }
 
-.neumorphic-progress {
-width: 390px;
-margin: auto;
-}
+
+
 .neumorphic-progress__back{
 height: 16px;
 background-color: white;
@@ -177,10 +270,12 @@ transition: 0.5s;
 }
 
 @keyframes sliding {
-0% {
-width: 0;
+    0% {
+    width: 0;
+    }
+    100% {
+    width: calc(100% - 8px);
+    }
 }
-100% {
-width: calc(100% - 8px);
-}
-}
+
+

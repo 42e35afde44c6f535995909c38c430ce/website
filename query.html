@@ -25,17 +25,17 @@
         <div id="upper-section">
             <div class="half">
                 <div id="color-reset-container">
-                    <input type="color" id="C-input">
-                    <button class="textManrope btn" onclick="reset()">Reset</button>
+                    <input id="C-input" type="range" min="0" max="255" value="0">
+                    <button class="textManrope btn" id="reset" onclick="reset()">Reset</button>
                 </div>
             </div>
             <div class="half">
                 <div id="pre-select-container">
-                    <div class="status">
+                    <div>
                         <input type="radio" id="self" name="status" value="self">
                         <label for="self">Self trained network</label>
                     </div>
-                    <div class="status">
+                    <div>
                         <input type="radio" id="pre" name="status" value="pre">
                         <label for="pre">Full pretrained network</label>
                     </div>
@@ -45,20 +45,19 @@
         <div id="lower-section">
             <div class="half">
                 <div id="field-container">
-                    <div class="container"></div>
+                    <div class="field"></div>
                 </div>
             </div>
             <div class="half">
                 <div id="query-container">
-                    <button class="textManrope btn" onclick="queryNetwork()">Query</button>
+                    <button class="textManrope btn" onclick="button_query()">Query</button>
                 </div>
                 <div id="output-container">
                     <div class="textManrope" id="query-output"></div>
                 </div>
             </div>
         </div>
-
-        <script src="script.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="query.js"></script>
     </div>
 </body>

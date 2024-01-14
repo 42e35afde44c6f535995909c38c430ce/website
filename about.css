@@ -1,3 +1,79 @@
+@media screen and (min-width: 480px) {
+    #portfolio {
+    width: 25%;
+    height: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+
+    border-radius: 30px;
+    background-color: rgba(240, 248, 255, 0.5);
+    }
+
+    .normal {
+        width: 300px;
+        height: 300px;
+        border-radius: 7px;
+    }
+        
+    .contact {
+        width: 30vw;
+        height: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        color:white;
+    }
+
+    .hcj {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #portfolio {
+    width: 90%;
+    height: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+
+    border-radius: 30px;
+    background-color: rgba(240, 248, 255, 0.5);
+    }
+        
+    .normal {
+        width: 250px;
+        height: 250px;
+        border-radius: 7px;
+    }
+            
+    .contact {
+        width: 80vw;
+        height: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        color:white;
+        margin: 10px;
+    }
+    
+    .hcj {
+        margin-left: 30px;
+        margin-right: 30px;
+        transform: scale(3);
+    }
+}
+
 .main-container {
     display: flex;
     flex-direction: column;
@@ -33,30 +109,8 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    flex-wrap: wrap;
     margin-top: 40px;
     background-color: #333;
-}
-
-#portfolio {
-    width: 25%;
-    height: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px;
-
-    border-radius: 30px;
-    background-color: rgba(240, 248, 255, 0.5);
-}
-
-.normal {
-    width: 300px;
-    height: 300px;
-    border-radius: 7px;
 }
 
 .logo {
@@ -67,18 +121,4 @@
 #description {
     padding:20px;
     font-size: 24px;
-}
-
-.contact {
-    width: 30vw;
-    height: 60%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    color:white;
-}
-
-.hcj {
-    margin-left: 30px;
-    margin-right: 30px;
 }
